@@ -3,8 +3,8 @@ package com.nelo.cryptovote.Votes;
 import android.os.Bundle;
 import android.widget.TextView;
 
-import com.nelo.cryptovote.Domain.Issue;
-import com.nelo.cryptovote.Domain.IssueChoice;
+import com.nelo.cryptovote.Domain.Question;
+import com.nelo.cryptovote.Domain.QuestionChoice;
 import com.nelo.cryptovote.Domain.Vote;
 import com.nelo.cryptovote.MyActivity;
 import com.nelo.cryptovote.R;
@@ -12,7 +12,7 @@ import com.nelo.cryptovote.R;
 import java.util.Date;
 
 public class VoteDetailActivity extends MyActivity {
-    TextView issueNameTextView,
+    TextView questionNameTextView,
             choiceIdTextView, choiceTextTextView,
             voteTimeTextView, votePublicKeyTextView, voteSignatureTextView, voteValidTextView;
 
@@ -23,7 +23,7 @@ public class VoteDetailActivity extends MyActivity {
 
         initToolbar();
 
-        issueNameTextView = this.findViewById(R.id.issue_name);
+        questionNameTextView = this.findViewById(R.id.question_name);
 
         choiceTextTextView = this.findViewById(R.id.choice_text);
         choiceIdTextView = this.findViewById(R.id.vote_choiceId);
@@ -38,15 +38,15 @@ public class VoteDetailActivity extends MyActivity {
     protected void onResume() {
         super.onResume();
 
-        Issue issue = (Issue) getIntent().getSerializableExtra("issue");
-        if (issue != null) {
-            issueNameTextView.setText(issue.name);
+        Question question = (Question) getIntent().getSerializableExtra("question");
+        if (question != null) {
+            questionNameTextView.setText(question.name);
         }
 
         Vote vote = (Vote) getIntent().getSerializableExtra("vote");
         if (vote != null) {
             choiceIdTextView.setText(vote.choiceId.toString());
-            for (IssueChoice choice : issue.choices) {
+            for (QuestionChoice choice : question.choices) {
                 if (choice.id.equals(vote.choiceId)) {
                     choiceTextTextView.setText(choice.text);
                     break;

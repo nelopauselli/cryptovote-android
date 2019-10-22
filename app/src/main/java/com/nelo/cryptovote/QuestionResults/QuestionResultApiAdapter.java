@@ -1,4 +1,4 @@
-package com.nelo.cryptovote.IssueResults;
+package com.nelo.cryptovote.QuestionResults;
 
 import android.content.Context;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -12,7 +12,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.nelo.cryptovote.ApiAdapter;
 import com.nelo.cryptovote.Domain.ChoiceResult;
-import com.nelo.cryptovote.Domain.IssueResult;
+import com.nelo.cryptovote.Domain.QuestionResult;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -20,21 +20,21 @@ import org.json.JSONObject;
 import java.math.BigInteger;
 import java.util.UUID;
 
-public class IssueResultApiAdapter extends ApiAdapter {
+public class QuestionResultApiAdapter extends ApiAdapter {
     private final String url;
     private final String tag;
     private Context context;
     private SwipeRefreshLayout swipeRefreshLayout;
 
-    public IssueResultApiAdapter(Context context, SwipeRefreshLayout swipeRefreshLayout) {
+    public QuestionResultApiAdapter(Context context, SwipeRefreshLayout swipeRefreshLayout) {
         this.context = context;
         this.swipeRefreshLayout = swipeRefreshLayout;
         this.url = server + "/api/result";
         this.tag = getClass().getSimpleName();
     }
 
-    public void get(final UUID communityId, final UUID issueId, final IssueResultAdapter adapter) {
-        String url = this.url + "/" + communityId.toString() + "/" + issueId.toString();
+    public void get(final UUID communityId, final UUID questionId, final QuestionResultAdapter adapter) {
+        String url = this.url + "/" + communityId.toString() + "/" + questionId.toString();
         if (swipeRefreshLayout != null) swipeRefreshLayout.setRefreshing(true);
 
         Log.d(tag, "Conectando con " + url);
@@ -45,10 +45,10 @@ public class IssueResultApiAdapter extends ApiAdapter {
                 Log.d(tag, "Response is: " + response.toString());
 
                 try {
-                    IssueResult result = new IssueResult();
+                    QuestionResult result = new QuestionResult();
 
-                    String issueId = response.getString("issueId");
-                    result.issueId = new UUID(new BigInteger(issueId.substring(0, 16), 16).longValue(), new BigInteger(issueId.substring(16), 16).longValue());
+                    String questionId = response.getString("questionId");
+                    result.questionId = new UUID(new BigInteger(questionId.substring(0, 16), 16).longValue(), new BigInteger(questionId.substring(16), 16).longValue());
 
                     result.type = (byte) response.getInt("type");
 

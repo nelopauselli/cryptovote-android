@@ -23,14 +23,14 @@
             app:popupTheme="@style/ThemeOverlay.AppCompat.Dark" />
 
         <TextView
-            android:id="@+id/issue_name"
+            android:id="@+id/question_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingLeft="@dimen/default_padding"
             android:textSize="@dimen/text_title_size"
             android:textAlignment="center"
             android:textColor="@color/colorPrimary"
-            android:text="[issue name]"/>
+            android:text="[question name]"/>
 
         <TextView
             android:id="@+id/choice_text"

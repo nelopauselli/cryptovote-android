@@ -15,13 +15,13 @@ import android.widget.Toast;
 
 import com.nelo.cryptovote.Base58;
 import com.nelo.cryptovote.Domain.ChoiceRecount;
-import com.nelo.cryptovote.Domain.Issue;
+import com.nelo.cryptovote.Domain.Question;
 import com.nelo.cryptovote.Domain.Recount;
 import com.nelo.cryptovote.MyActivity;
 import com.nelo.cryptovote.R;
 import com.nelo.cryptovote.Signer;
-import com.nelo.cryptovote.WebApiAdapters.IssueApiAdapter;
-import com.nelo.cryptovote.WebApiAdapters.IssueGetListener;
+import com.nelo.cryptovote.WebApiAdapters.QuestionApiAdapter;
+import com.nelo.cryptovote.WebApiAdapters.QuestionGetListener;
 import com.nelo.cryptovote.WebApiAdapters.RecountApiAdapter;
 import com.nelo.cryptovote.WebApiAdapters.RequestListener;
 
@@ -33,10 +33,10 @@ public class RecountAddActivity extends MyActivity {
     private RecountAdapter adapter;
     private String tag;
 
-    private UUID communityId, issueId, urnId;
+    private UUID communityId, questionId, urnId;
 
     private Signer signer;
-    private IssueApiAdapter issueApiAdapter;
+    private QuestionApiAdapter questionApiAdapter;
     private RecountApiAdapter recountApiAdapter;
 
     private FloatingActionButton sendButton;
@@ -114,7 +114,7 @@ public class RecountAddActivity extends MyActivity {
             }
         });
 
-        issueApiAdapter = new IssueApiAdapter(this, null);
+        questionApiAdapter = new QuestionApiAdapter(this, null);
         recountApiAdapter = new RecountApiAdapter(this);
     }
 
@@ -130,23 +130,23 @@ public class RecountAddActivity extends MyActivity {
 
         Intent intent = this.getIntent();
         communityId = UUID.fromString(intent.getStringExtra("communityId"));
-        issueId = UUID.fromString(intent.getStringExtra("issueId"));
+        questionId = UUID.fromString(intent.getStringExtra("questionId"));
         urnId = UUID.fromString(intent.getStringExtra("urnId"));
 
         ActionBar actionBar = getSupportActionBar();
-        CharSequence issueName = getIntent().getStringExtra("issueName");
+        CharSequence questionName = getIntent().getStringExtra("questionName");
         CharSequence urnName = getIntent().getStringExtra("urnName");
-        actionBar.setTitle(issueName + " - " + urnName);
+        actionBar.setTitle(questionName + " - " + urnName);
 
         adapter = new RecountAdapter();
         recyclerView.setAdapter(adapter);
 
-        issueApiAdapter.get(communityId, issueId, new IssueGetListener() {
+        questionApiAdapter.get(communityId, questionId, new QuestionGetListener() {
             @Override
-            public void onComplete(Issue issue) {
-                Log.d(tag, "Binding issue: " + issue.name);
+            public void onComplete(Question question) {
+                Log.d(tag, "Binding question: " + question.name);
 
-                adapter.setEntities(issue.choices);
+                adapter.setEntities(question.choices);
                 adapter.notifyDataSetChanged();
             }
         });

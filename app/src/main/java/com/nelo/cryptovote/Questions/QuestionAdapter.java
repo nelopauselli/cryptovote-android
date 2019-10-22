@@ -1,4 +1,4 @@
-package com.nelo.cryptovote.Issues;
+package com.nelo.cryptovote.Questions;
 
 import android.content.Context;
 import android.content.Intent;
@@ -10,75 +10,75 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.nelo.cryptovote.Choices.ChoiceActivity;
-import com.nelo.cryptovote.Domain.Issue;
-import com.nelo.cryptovote.IssueResults.IssueResultActivity;
+import com.nelo.cryptovote.Domain.Question;
+import com.nelo.cryptovote.QuestionResults.QuestionResultActivity;
 import com.nelo.cryptovote.R;
 import com.nelo.cryptovote.Urns.UrnListActivity;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class IssueAdapter extends RecyclerView.Adapter<IssueViewHolder> {
+public class QuestionAdapter extends RecyclerView.Adapter<QuestionViewHolder> {
 
     private Context context;
-    private List<Issue> items;
+    private List<Question> items;
 
-    public IssueAdapter() {
+    public QuestionAdapter() {
         items = new ArrayList<>();
     }
 
-    public void setEntities(List<Issue> issues) {
-        Log.d(getClass().getSimpleName(), "Loading " + issues.size() + " issues");
-        this.items = issues;
+    public void setEntities(List<Question> questions) {
+        Log.d(getClass().getSimpleName(), "Loading " + questions.size() + " questions");
+        this.items = questions;
         this.notifyDataSetChanged();
     }
 
     // Usually involves inflating a layout from XML and returning the holder
     @Override
-    public IssueViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        Log.d(getClass().getSimpleName(), "Inflating issues");
+    public QuestionViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        Log.d(getClass().getSimpleName(), "Inflating questions");
 
         this.context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
 
         // Inflate the custom layout
-        View view = inflater.inflate(R.layout.issue_item, parent, false);
+        View view = inflater.inflate(R.layout.question_item, parent, false);
 
         // Return a new holder instance
-        IssueViewHolder viewHolder = new IssueViewHolder(view);
+        QuestionViewHolder viewHolder = new QuestionViewHolder(view);
         return viewHolder;
     }
 
     // Involves populating data into the item through holder
     @Override
-    public void onBindViewHolder(IssueViewHolder holder, final int position) {
+    public void onBindViewHolder(QuestionViewHolder holder, final int position) {
         if (items == null)
             return;
 
-        Issue issue = items.get(position);
-        Log.d(getClass().getSimpleName(), "Binding issue: " + issue.name);
+        Question question = items.get(position);
+        Log.d(getClass().getSimpleName(), "Binding question: " + question.name);
 
-        holder.nameTextView.setText(issue.name);
+        holder.nameTextView.setText(question.name);
         holder.parentLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Issue issue = items.get(position);
+                Question question = items.get(position);
 
-                if (issue.type == 1) {
+                if (question.type == 1) {
                     Intent i = new Intent(context, ChoiceActivity.class);
-                    i.putExtra("communityId", issue.communityId.toString());
-                    i.putExtra("issueId", issue.id.toString());
+                    i.putExtra("communityId", question.communityId.toString());
+                    i.putExtra("questionId", question.id.toString());
 
                     context.startActivity(i);
-                } else if (issue.type == 2) {
+                } else if (question.type == 2) {
                     Intent i = new Intent(context, UrnListActivity.class);
-                    i.putExtra("communityId", issue.communityId.toString());
-                    i.putExtra("issueId", issue.id.toString());
-                    i.putExtra("issueName", issue.name);
+                    i.putExtra("communityId", question.communityId.toString());
+                    i.putExtra("questionId", question.id.toString());
+                    i.putExtra("questionName", question.name);
 
                     context.startActivity(i);
                 } else {
-                    Toast.makeText(context, "Issue type" + issue.type, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "Question type" + question.type, Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -93,18 +93,18 @@ public class IssueAdapter extends RecyclerView.Adapter<IssueViewHolder> {
         holder.resultButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(context, IssueResultActivity.class);
+                Intent i = new Intent(context, QuestionResultActivity.class);
 
-                Issue issue = items.get(position);
-                i.putExtra("communityId", issue.communityId.toString());
-                i.putExtra("issueId", issue.id.toString());
-                i.putExtra("issueName", issue.name);
+                Question question = items.get(position);
+                i.putExtra("communityId", question.communityId.toString());
+                i.putExtra("questionId", question.id.toString());
+                i.putExtra("questionName", question.name);
 
                 context.startActivity(i);
             }
         });
 
-        Log.d(getClass().getSimpleName(), "Issue bind");
+        Log.d(getClass().getSimpleName(), "Question bind");
     }
 
     // Returns the total count of items in the list

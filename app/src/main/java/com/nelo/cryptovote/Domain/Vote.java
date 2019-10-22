@@ -10,7 +10,7 @@ import java.nio.ByteBuffer;
 import java.util.UUID;
 
 public class Vote extends BlockItem implements Serializable {
-    public UUID issueId;
+    public UUID questionId;
     public UUID choiceId;
     public long time;
 
@@ -18,8 +18,8 @@ public class Vote extends BlockItem implements Serializable {
     public byte[] getData() {
         ByteBuffer buffer = ByteBuffer.wrap(new byte[16 + 16 + 8]);
 
-        buffer.putLong(issueId.getMostSignificantBits());
-        buffer.putLong(issueId.getLeastSignificantBits());
+        buffer.putLong(questionId.getMostSignificantBits());
+        buffer.putLong(questionId.getLeastSignificantBits());
 
         buffer.putLong(choiceId.getMostSignificantBits());
         buffer.putLong(choiceId.getLeastSignificantBits());

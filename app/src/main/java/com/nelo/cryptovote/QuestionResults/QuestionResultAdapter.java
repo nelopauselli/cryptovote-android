@@ -1,4 +1,4 @@
-package com.nelo.cryptovote.IssueResults;
+package com.nelo.cryptovote.QuestionResults;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -8,24 +8,23 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.nelo.cryptovote.Domain.ChoiceRecount;
 import com.nelo.cryptovote.Domain.ChoiceResult;
-import com.nelo.cryptovote.Domain.IssueResult;
+import com.nelo.cryptovote.Domain.QuestionResult;
 import com.nelo.cryptovote.R;
 
 import java.nio.ByteBuffer;
 import java.util.Arrays;
 import java.util.Comparator;
 
-public class IssueResultAdapter extends RecyclerView.Adapter<IssueResultViewHolder> {
+public class QuestionResultAdapter extends RecyclerView.Adapter<QuestionResultViewHolder> {
     private Context context;
-    private IssueResult result;
+    private QuestionResult result;
     ChoiceResult[] sorted;
 
-    IssueResultAdapter() {
+    QuestionResultAdapter() {
     }
 
-    public void setEntities(IssueResult result) {
+    public void setEntities(QuestionResult result) {
         this.result = result;
 
         sorted = result.choices.toArray(new ChoiceResult[0]);
@@ -40,19 +39,19 @@ public class IssueResultAdapter extends RecyclerView.Adapter<IssueResultViewHold
     }
 
     @Override
-    public IssueResultViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public QuestionResultViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         this.context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
 
-        View view = inflater.inflate(R.layout.issue_result_item, parent, false);
+        View view = inflater.inflate(R.layout.question_result_item, parent, false);
 
-        IssueResultViewHolder viewHolder = new IssueResultViewHolder(view);
+        QuestionResultViewHolder viewHolder = new QuestionResultViewHolder(view);
         return viewHolder;
     }
 
     // Involves populating data into the item through holder
     @Override
-    public void onBindViewHolder(IssueResultViewHolder holder, final int position) {
+    public void onBindViewHolder(QuestionResultViewHolder holder, final int position) {
         if (result == null)
             return;
 
@@ -79,7 +78,7 @@ public class IssueResultAdapter extends RecyclerView.Adapter<IssueResultViewHold
     public int getItemCount() {
         if (result == null || result.choices == null) return 0;
 
-        Log.d("IssueResultApiAdapter", "Items: " + result.choices.size());
+        Log.d("QuestionResultAdapter", "Items: " + result.choices.size());
         return result.choices.size();
     }
 }

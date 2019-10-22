@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string-array name="issue_types_array">
+    <string-array name="question_types_array">
         <item>Voto Directo</item>
         <item>Voto por Urna</item>
     </string-array>

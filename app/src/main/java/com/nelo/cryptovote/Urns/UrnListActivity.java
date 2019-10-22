@@ -6,19 +6,16 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Toast;
 
-import com.nelo.cryptovote.Domain.Issue;
+import com.nelo.cryptovote.Domain.Question;
 import com.nelo.cryptovote.MyActivity;
 import com.nelo.cryptovote.R;
-import com.nelo.cryptovote.WebApiAdapters.IssueApiAdapter;
-import com.nelo.cryptovote.WebApiAdapters.IssueGetListener;
+import com.nelo.cryptovote.WebApiAdapters.QuestionApiAdapter;
+import com.nelo.cryptovote.WebApiAdapters.QuestionGetListener;
 import com.nelo.cryptovote.WebApiAdapters.UrnApiAdapter;
 
 import java.util.UUID;
@@ -29,7 +26,7 @@ public class UrnListActivity extends MyActivity {
     private UrnApiAdapter urnApiAdapter;
     private UrnAdapter adapter;
     private SwipeRefreshLayout swipeRefreshLayout;
-    private UUID communityId, issueId;
+    private UUID communityId, questionId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +42,7 @@ public class UrnListActivity extends MyActivity {
         this.swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                urnApiAdapter.list(issueId, adapter);
+                urnApiAdapter.list(questionId, adapter);
             }
         });
 
@@ -71,23 +68,23 @@ public class UrnListActivity extends MyActivity {
         recyclerView.setLayoutManager(layoutManager);
 
         ActionBar actionBar = getSupportActionBar();
-        CharSequence issueName = getIntent().getStringExtra("issueName");
-        actionBar.setTitle(issueName);
+        CharSequence questionName = getIntent().getStringExtra("questionName");
+        actionBar.setTitle(questionName);
 
         Intent intent = this.getIntent();
 
         communityId = UUID.fromString(intent.getStringExtra("communityId"));
-        issueId = UUID.fromString(intent.getStringExtra("issueId"));
+        questionId = UUID.fromString(intent.getStringExtra("questionId"));
 
-        IssueApiAdapter issueApiAdapter = new IssueApiAdapter(this, null);
-        issueApiAdapter.get(communityId, issueId, new IssueGetListener() {
+        QuestionApiAdapter questionApiAdapter = new QuestionApiAdapter(this, null);
+        questionApiAdapter.get(communityId, questionId, new QuestionGetListener() {
             @Override
-            public void onComplete(Issue issue) {
-                adapter = new UrnAdapter(issue);
+            public void onComplete(Question question) {
+                adapter = new UrnAdapter(question);
                 recyclerView.setAdapter(adapter);
 
                 urnApiAdapter = new UrnApiAdapter(context, context.swipeRefreshLayout);
-                urnApiAdapter.list(issue.id, adapter);
+                urnApiAdapter.list(question.id, adapter);
             }
         });
 

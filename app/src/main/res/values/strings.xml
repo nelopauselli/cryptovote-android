@@ -91,7 +91,7 @@
     </string>
     <string name="vote">Votar</string>
     <string name="result">Resultados</string>
-    <string name="issues">Asuntos</string>
+    <string name="questions">Asuntos</string>
     <string name="members">Miembros</string>
     <string name="communities">Comunidades</string>
     <string name="community">Comunidad</string>
@@ -99,7 +99,7 @@
     <string name="unlock_text">Ingrese su PIN para desbloquear crypto-vote</string>
     <string name="unlock">Ingresar</string>
     <string name="title_activity_main2">Main2Activity</string>
-    <string name="issue_name">Asunto</string>
+    <string name="question_name">Asunto</string>
     <string name="change_user">Cambiar Usuario</string>
     <string name="users">Usuarios</string>
     <string name="username">Nombre de Usuario</string>
@@ -115,7 +115,7 @@
     <string name="no">No</string>
     <string name="copy_in_clipboard">Copiado en el portapapeles</string>
     <string name="privateKey">Clave Privada</string>
-    <string name="issue">Asunto</string>
+    <string name="question">Asunto</string>
     <string name="send">Enviar</string>
     <string name="urn_number">Número de Urna</string>
     <string name="recount">Recuento</string>
@@ -128,16 +128,16 @@
     <string name="memberName">Nombre del Miembro</string>
     <string name="memberPublicKey">Clave Pública</string>
     <string name="memberAddress">Dirección</string>
-    <string name="issueName">Asunto</string>
+    <string name="questionName">Asunto</string>
     <string name="choice_add">Agregar Opción</string>
     <string name="choice_text">Descripción de la Opción</string>
-    <string name="issue_choices">Opciones</string>
-    <string name="issue_close_date">Fecha de cierre</string>
-    <string name="issue_close_time">Hora de cierre</string>
-    <string name="issue_choice_color">Color</string>
+    <string name="question_choices">Opciones</string>
+    <string name="question_close_date">Fecha de cierre</string>
+    <string name="question_close_time">Hora de cierre</string>
+    <string name="question_choice_color">Color</string>
     <string name="choice_guardian_address">Dirección del representante legal de esta opción</string>
-    <string name="issue_type_1">Voto Directo</string>
-    <string name="issue_type_2">Voto por Urnas</string>
-    <string name="issue_result">Resultado</string>
+    <string name="question_type_1">Voto Directo</string>
+    <string name="question_type_2">Voto por Urnas</string>
+    <string name="question_result">Resultado</string>
     <string name="server_ip">Servidor</string>
 </resources>

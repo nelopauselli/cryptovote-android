@@ -9,7 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.nelo.cryptovote.Domain.Issue;
+import com.nelo.cryptovote.Domain.Question;
 import com.nelo.cryptovote.Domain.Recount;
 import com.nelo.cryptovote.Domain.Urn;
 import com.nelo.cryptovote.R;
@@ -25,10 +25,10 @@ public class UrnAdapter extends RecyclerView.Adapter<UrnViewHolder> {
 
     private Context context;
     private List<Urn> items;
-    private Issue issue;
+    private Question question;
 
-    public UrnAdapter(Issue issue) {
-        this.issue = issue;
+    public UrnAdapter(Question question) {
+        this.question = question;
         items = new ArrayList<>();
     }
 
@@ -70,10 +70,10 @@ public class UrnAdapter extends RecyclerView.Adapter<UrnViewHolder> {
                 Urn urn = items.get(position);
 
                 Intent i = new Intent(context, RecountAddActivity.class);
-                i.putExtra("communityId", issue.communityId.toString());
-                i.putExtra("issueId", urn.issueId.toString());
+                i.putExtra("communityId", question.communityId.toString());
+                i.putExtra("questionId", urn.questionId.toString());
                 i.putExtra("urnId", urn.id.toString());
-                i.putExtra("issueName", issue.name);
+                i.putExtra("questionName", question.name);
                 i.putExtra("urnName", urn.name);
 
                 context.startActivity(i);
@@ -97,7 +97,7 @@ public class UrnAdapter extends RecyclerView.Adapter<UrnViewHolder> {
                         Intent i = new Intent(context, RecountDetailActivity.class);
 
                         Urn urn = items.get(position);
-                        i.putExtra("issue", issue);
+                        i.putExtra("question", question);
                         i.putExtra("urnName", urn.name);
                         i.putExtra("recount", response);
 

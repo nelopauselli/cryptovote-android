@@ -13,9 +13,9 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.nelo.cryptovote.ApiAdapter;
-import com.nelo.cryptovote.Domain.Issue;
-import com.nelo.cryptovote.Domain.IssueChoice;
-import com.nelo.cryptovote.Issues.IssueAdapter;
+import com.nelo.cryptovote.Domain.Question;
+import com.nelo.cryptovote.Domain.QuestionChoice;
+import com.nelo.cryptovote.Questions.QuestionAdapter;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -28,20 +28,20 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
-public class IssueApiAdapter extends ApiAdapter {
+public class QuestionApiAdapter extends ApiAdapter {
     private final String url;
     private final String tag;
     private Context context;
     private SwipeRefreshLayout swipeRefreshLayout;
 
-    public IssueApiAdapter(Context context, SwipeRefreshLayout swipeRefreshLayout) {
+    public QuestionApiAdapter(Context context, SwipeRefreshLayout swipeRefreshLayout) {
         this.context = context;
         this.swipeRefreshLayout = swipeRefreshLayout;
-        this.url = server + "/api/issue";
+        this.url = server + "/api/question";
         this.tag = getClass().getSimpleName();
     }
 
-    public void list(final String communityId, final IssueAdapter adapter) {
+    public void list(final String communityId, final QuestionAdapter adapter) {
         String url = this.url + "/" + communityId;
         if (swipeRefreshLayout != null) swipeRefreshLayout.setRefreshing(true);
 
@@ -53,37 +53,37 @@ public class IssueApiAdapter extends ApiAdapter {
             public void onResponse(JSONArray response) {
                 Log.d(tag, "Response is: " + response.toString());
 
-                List<Issue> issues = new ArrayList<>();
+                List<Question> questions = new ArrayList<>();
 
                 try {
                     for (int i = 0; i < response.length(); i++) {
                         JSONObject item = response.getJSONObject(i);
 
-                        Issue issue = new Issue();
+                        Question question = new Question();
 
-                        String issueId = item.getString("id");
-                        Log.d(tag, "Parsing issue " + issueId);
+                        String questionId = item.getString("id");
+                        Log.d(tag, "Parsing question " + questionId);
 
-                        issue.id = new UUID(
-                                new BigInteger(issueId.substring(0, 16), 16).longValue(),
-                                new BigInteger(issueId.substring(16), 16).longValue());
+                        question.id = new UUID(
+                                new BigInteger(questionId.substring(0, 16), 16).longValue(),
+                                new BigInteger(questionId.substring(16), 16).longValue());
 
                         String communityId = item.getString("communityId");
-                        issue.communityId = new UUID(
+                        question.communityId = new UUID(
                                 new BigInteger(communityId.substring(0, 16), 16).longValue(),
                                 new BigInteger(communityId.substring(16), 16).longValue());
 
-                        issue.type = (byte) item.getInt("type");
-                        issue.name = item.getString("name");
-                        issue.endTime = item.getLong("endTime");
-                        issue.publicKey = item.getString("publicKey");
-                        issue.signature = item.getString("signature");
+                        question.type = (byte) item.getInt("type");
+                        question.name = item.getString("name");
+                        question.endTime = item.getLong("endTime");
+                        question.publicKey = item.getString("publicKey");
+                        question.signature = item.getString("signature");
 
-                        issues.add(issue);
+                        questions.add(question);
                     }
 
-                    Log.d(tag, issues.size() + " issues parsed");
-                    adapter.setEntities(issues);
+                    Log.d(tag, questions.size() + " questions parsed");
+                    adapter.setEntities(questions);
                     if (swipeRefreshLayout != null) swipeRefreshLayout.setRefreshing(false);
                 } catch (Exception e) {
                     Log.e(getClass().getSimpleName(), "Error parsearndo respuesta", e);
@@ -102,8 +102,8 @@ public class IssueApiAdapter extends ApiAdapter {
         queue.add(request);
     }
 
-    public void get(final UUID communityId, final UUID issueId, final IssueGetListener listener) {
-        String url = this.url + "/" + communityId.toString() + "/" + issueId.toString();
+    public void get(final UUID communityId, final UUID questionId, final QuestionGetListener listener) {
+        String url = this.url + "/" + communityId.toString() + "/" + questionId.toString();
 
         Log.d(tag, "Conectando con " + url);
 
@@ -113,22 +113,22 @@ public class IssueApiAdapter extends ApiAdapter {
                 Log.d(tag, "Response is: " + response.toString());
 
                 try {
-                    Issue issue = new Issue();
+                    Question question = new Question();
 
-                    String issueId = response.getString("id");
-                    Log.d(tag, "Parsing issue " + issueId);
+                    String questionId = response.getString("id");
+                    Log.d(tag, "Parsing question " + questionId);
 
-                    issue.id = new UUID(
-                            new BigInteger(issueId.substring(0, 16), 16).longValue(),
-                            new BigInteger(issueId.substring(16), 16).longValue());
+                    question.id = new UUID(
+                            new BigInteger(questionId.substring(0, 16), 16).longValue(),
+                            new BigInteger(questionId.substring(16), 16).longValue());
 
                     String communityId = response.getString("communityId");
-                    issue.communityId = new UUID(
+                    question.communityId = new UUID(
                             new BigInteger(communityId.substring(0, 16), 16).longValue(),
                             new BigInteger(communityId.substring(16), 16).longValue());
 
-                    issue.name = response.getString("name");
-                    issue.endTime = response.getLong("endTime");
+                    question.name = response.getString("name");
+                    question.endTime = response.getLong("endTime");
 
                     JSONArray choices = response.getJSONArray("choices");
                     Log.d(tag, "Choices: " + choices.length());
@@ -136,21 +136,21 @@ public class IssueApiAdapter extends ApiAdapter {
 
                         JSONObject item = choices.getJSONObject(i);
 
-                        final IssueChoice choice = new IssueChoice();
+                        final QuestionChoice choice = new QuestionChoice();
                         String choiceId = item.getString("id");
                         choice.id = new UUID(
                                 new BigInteger(choiceId.substring(0, 16), 16).longValue(),
                                 new BigInteger(choiceId.substring(16), 16).longValue());
                         choice.text = item.getString("text");
                         choice.color = item.getInt("color");
-                        issue.choices.add(choice);
+                        question.choices.add(choice);
                     }
 
-                    issue.publicKey = response.getString("publicKey");
-                    issue.signature = response.getString("signature");
+                    question.publicKey = response.getString("publicKey");
+                    question.signature = response.getString("signature");
 
-                    Log.d(tag, "1 issues parsed");
-                    listener.onComplete(issue);
+                    Log.d(tag, "1 questions parsed");
+                    listener.onComplete(question);
                 } catch (Exception e) {
                     Log.e(getClass().getSimpleName(), "Error parseando respuesta", e);
                 }
@@ -166,12 +166,12 @@ public class IssueApiAdapter extends ApiAdapter {
         queue.add(request);
     }
 
-    public void add(final Issue issue, final RequestListener<Issue> listener) {
+    public void add(final Question question, final RequestListener<Question> listener) {
         Log.d(getClass().getSimpleName(), "Conectando con " + url);
 
         try {
             final JSONArray choices = new JSONArray();
-            for (IssueChoice choice : issue.choices) {
+            for (QuestionChoice choice : question.choices) {
                 JSONObject choiceJson = new JSONObject();
                 choiceJson.put("id", choice.id);
                 choiceJson.put("text", choice.text);
@@ -181,14 +181,14 @@ public class IssueApiAdapter extends ApiAdapter {
             }
             final JSONObject data = new JSONObject();
 
-            data.put("id", issue.id);
-            data.put("communityId", issue.communityId);
-            data.put("name", issue.name);
-            data.put("type", (int) issue.type);
-            data.put("endTime", issue.endTime);
+            data.put("id", question.id);
+            data.put("communityId", question.communityId);
+            data.put("name", question.name);
+            data.put("type", (int) question.type);
+            data.put("endTime", question.endTime);
             data.put("choices", choices);
-            data.put("publicKey", issue.publicKey);
-            data.put("signature", issue.signature);
+            data.put("publicKey", question.publicKey);
+            data.put("signature", question.signature);
 
             Log.d(getClass().getSimpleName(), "Sending: " + data.toString());
 
@@ -201,7 +201,7 @@ public class IssueApiAdapter extends ApiAdapter {
                         @Override
                         public void onResponse(JSONObject response) {
                             Log.d(getClass().getSimpleName(), "Response is: " + response);
-                            listener.onComplete(issue);
+                            listener.onComplete(question);
                         }
                     }, new Response.ErrorListener() {
                 @Override

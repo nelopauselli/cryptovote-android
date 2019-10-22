@@ -19,7 +19,7 @@
             android:layout_height="?attr/actionBarSize"
             android:elevation="4dp"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-            app:title="@string/issue"
+            app:title="@string/question"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Dark" />
 
     <android.support.v7.widget.RecyclerView

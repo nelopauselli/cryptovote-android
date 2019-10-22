@@ -16,9 +16,9 @@
             android:name=".Landing.SplashActivity"
             android:theme="@style/SplashTheme" />
         <activity android:name=".Communities.CommunityListActivity" />
-        <activity android:name=".Issues.IssueListActivity" />
-        <activity android:name=".Issues.IssueAddActivity" />
-        <activity android:name=".IssueResults.IssueResultActivity" />
+        <activity android:name=".Questions.QuestionListActivity" />
+        <activity android:name=".Questions.QuestionAddActivity" />
+        <activity android:name=".QuestionResults.QuestionResultActivity" />
         <activity android:name=".Members.MemberListActivity" />
         <activity android:name=".Members.MemberAddActivity" />
         <activity android:name=".Votes.VoteListActivity" />

@@ -9,11 +9,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.nelo.cryptovote.Base58;
-import com.nelo.cryptovote.Domain.Issue;
-import com.nelo.cryptovote.Domain.IssueChoice;
+import com.nelo.cryptovote.Domain.Question;
+import com.nelo.cryptovote.Domain.QuestionChoice;
 import com.nelo.cryptovote.Domain.Vote;
 import com.nelo.cryptovote.R;
-import com.nelo.cryptovote.Signer;
 
 import java.util.Date;
 import java.util.List;
@@ -22,7 +21,7 @@ public class VotesAdapter extends RecyclerView.Adapter<VoteViewHolder> {
 
     private Context context;
     private List<Vote> votes;
-    private Issue issue;
+    private Question question;
 
     public void setEntities(List<Vote> votes) {
         this.votes = votes;
@@ -61,7 +60,7 @@ public class VotesAdapter extends RecyclerView.Adapter<VoteViewHolder> {
 
         holder.choiceIdTextView.setText(String.valueOf(vote.choiceId));
 
-        for (IssueChoice choice : issue.choices) {
+        for (QuestionChoice choice : question.choices) {
             if (choice.id.equals(vote.choiceId)) {
                 holder.parentLayout.setBackgroundColor(choice.color);
                 holder.choiceTextTextView.setText(String.valueOf(choice.text));
@@ -77,7 +76,7 @@ public class VotesAdapter extends RecyclerView.Adapter<VoteViewHolder> {
                 Intent i = new Intent(context, VoteDetailActivity.class);
 
                 Vote vote = votes.get(position);
-                i.putExtra("issue", issue);
+                i.putExtra("question", question);
                 i.putExtra("vote", vote);
 
                 context.startActivity(i);
@@ -93,8 +92,8 @@ public class VotesAdapter extends RecyclerView.Adapter<VoteViewHolder> {
         return votes == null ? 0 : votes.size();
     }
 
-    public void setIssue(Issue issue) {
+    public void setQuestion(Question question) {
 
-        this.issue = issue;
+        this.question = question;
     }
 }

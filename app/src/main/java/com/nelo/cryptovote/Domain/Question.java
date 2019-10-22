@@ -7,20 +7,20 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class Issue extends BlockItem implements Serializable {
+public class Question extends BlockItem implements Serializable {
     public UUID id;
     public UUID communityId;
     public String name;
     public byte type;
     public long endTime;
-    public List<IssueChoice> choices = new ArrayList<>();
+    public List<QuestionChoice> choices = new ArrayList<>();
 
     @Override
     public byte[] getData() throws UnsupportedEncodingException {
         List<byte[]> temp = new ArrayList<>();
         int tempLength = 0;
 
-        for (IssueChoice choice : choices) {
+        for (QuestionChoice choice : choices) {
             byte[] choiceAsBytes = choice.getData();
 
             temp.add(choiceAsBytes);

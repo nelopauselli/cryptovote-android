@@ -38,8 +38,8 @@ public class VoteApiAdapter extends ApiAdapter {
         this.url = server + "/api/vote";
     }
 
-    public void list(final UUID issueId, final VotesAdapter adapter) {
-        String url = this.url + "/" + issueId.toString();
+    public void list(final UUID questionId, final VotesAdapter adapter) {
+        String url = this.url + "/" + questionId.toString();
         Log.d(getClass().getSimpleName(), "Conectando con " + url);
         if (swipeRefreshLayout != null) swipeRefreshLayout.setRefreshing(true);
 
@@ -56,10 +56,10 @@ public class VoteApiAdapter extends ApiAdapter {
                         JSONObject item = response.getJSONObject(i);
 
                         Vote vote = new Vote();
-                        String issueId = item.getString("issueId");
-                        vote.issueId = new UUID(
-                                new BigInteger(issueId.substring(0, 16), 16).longValue(),
-                                new BigInteger(issueId.substring(16), 16).longValue());
+                        String questionId = item.getString("questionId");
+                        vote.questionId = new UUID(
+                                new BigInteger(questionId.substring(0, 16), 16).longValue(),
+                                new BigInteger(questionId.substring(16), 16).longValue());
 
                         String choiceId = item.getString("choiceId");
                         vote.choiceId = new UUID(
@@ -88,7 +88,7 @@ public class VoteApiAdapter extends ApiAdapter {
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
-                params.put("issueId", issueId.toString());
+                params.put("questionId", questionId.toString());
 
                 return params;
             }
@@ -104,7 +104,7 @@ public class VoteApiAdapter extends ApiAdapter {
         try {
             final JSONObject data = new JSONObject();
 
-            data.put("issueId", vote.issueId);
+            data.put("questionId", vote.questionId);
             data.put("choiceId", vote.choiceId);
             data.put("time", vote.time);
             data.put("publicKey", vote.publicKey);

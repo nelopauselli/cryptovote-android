@@ -1,4 +1,4 @@
-package com.nelo.cryptovote.Issues;
+package com.nelo.cryptovote.Questions;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
@@ -12,7 +12,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -20,38 +19,34 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
-import android.widget.ToggleButton;
 
-import com.nelo.cryptovote.Domain.Issue;
-import com.nelo.cryptovote.Domain.IssueChoice;
+import com.nelo.cryptovote.Domain.Question;
+import com.nelo.cryptovote.Domain.QuestionChoice;
 import com.nelo.cryptovote.MyActivity;
 import com.nelo.cryptovote.R;
 import com.nelo.cryptovote.Signer;
-import com.nelo.cryptovote.WebApiAdapters.IssueApiAdapter;
+import com.nelo.cryptovote.WebApiAdapters.QuestionApiAdapter;
 import com.nelo.cryptovote.WebApiAdapters.RequestListener;
 
-import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 import java.util.UUID;
 
-public class IssueAddActivity extends MyActivity {
-    private IssueApiAdapter issueApiAdapter;
+public class QuestionAddActivity extends MyActivity {
+    private QuestionApiAdapter questionApiAdapter;
     private UUID communityId;
     private byte type;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_issue_add);
+        setContentView(R.layout.activity_question_add);
 
         initToolbar();
 
         final Context context = this;
 
-        issueApiAdapter = new IssueApiAdapter(this, null);
+        questionApiAdapter = new QuestionApiAdapter(this, null);
 
         Intent intent = getIntent();
         Uri data = intent.getData();
@@ -64,8 +59,8 @@ public class IssueAddActivity extends MyActivity {
             }
         } else {
 
-            Spinner spinner = findViewById(R.id.issue_type);
-            ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.issue_types_array, android.R.layout.simple_spinner_item);
+            Spinner spinner = findViewById(R.id.question_type);
+            ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.question_types_array, android.R.layout.simple_spinner_item);
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             spinner.setAdapter(adapter);
             spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -81,17 +76,17 @@ public class IssueAddActivity extends MyActivity {
             });
             type = 1;
 
-            AppCompatButton choicesAddButton = findViewById(R.id.issue_choices_add);
+            AppCompatButton choicesAddButton = findViewById(R.id.question_choices_add);
             choicesAddButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    LinearLayout choices = findViewById(R.id.issue_choices);
+                    LinearLayout choices = findViewById(R.id.question_choices);
                     View.inflate(context, R.layout.choice_add_item, choices);
                 }
             });
 
-            final EditText issueCloseDate = findViewById(R.id.issue_close_date);
-            issueCloseDate.setOnClickListener(new View.OnClickListener() {
+            final EditText questionCloseDate = findViewById(R.id.question_close_date);
+            questionCloseDate.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     final Calendar cldr = Calendar.getInstance();
@@ -99,38 +94,38 @@ public class IssueAddActivity extends MyActivity {
                     int month = cldr.get(Calendar.MONTH);
                     int year = cldr.get(Calendar.YEAR);
                     // date picker dialog
-                    DatePickerDialog picker = new DatePickerDialog(IssueAddActivity.this,
+                    DatePickerDialog picker = new DatePickerDialog(QuestionAddActivity.this,
                             new DatePickerDialog.OnDateSetListener() {
                                 @Override
                                 public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                                    issueCloseDate.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
+                                    questionCloseDate.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
                                 }
                             }, year, month, day);
                     picker.show();
                 }
             });
 
-            final EditText issueCloseTime = findViewById(R.id.issue_close_time);
-            issueCloseTime.setOnClickListener(new View.OnClickListener() {
+            final EditText questionCloseTime = findViewById(R.id.question_close_time);
+            questionCloseTime.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     final Calendar cldr = Calendar.getInstance();
                     int hour = cldr.get(Calendar.HOUR_OF_DAY);
                     int minutes = cldr.get(Calendar.MINUTE);
                     // date picker dialog
-                    TimePickerDialog picker = new TimePickerDialog(IssueAddActivity.this,
+                    TimePickerDialog picker = new TimePickerDialog(QuestionAddActivity.this,
                             new TimePickerDialog.OnTimeSetListener() {
 
                                 @Override
                                 public void onTimeSet(TimePicker timePicker, int h, int m) {
-                                    issueCloseTime.setText(h + ":" + (m < 10 ? "0" : "") + m);
+                                    questionCloseTime.setText(h + ":" + (m < 10 ? "0" : "") + m);
                                 }
                             }, hour, minutes, true);
                     picker.show();
                 }
             });
 
-            FloatingActionButton addButton = findViewById(R.id.issue_add);
+            FloatingActionButton addButton = findViewById(R.id.question_add);
             addButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -139,27 +134,27 @@ public class IssueAddActivity extends MyActivity {
                     working.show();
 
                     try {
-                        TextView nameTextView = findViewById(R.id.issue_name);
+                        TextView nameTextView = findViewById(R.id.question_name);
 
-                        Issue issue = new Issue();
-                        issue.id = UUID.randomUUID();
-                        issue.communityId = communityId;
-                        issue.name = nameTextView.getText().toString();
+                        Question question = new Question();
+                        question.id = UUID.randomUUID();
+                        question.communityId = communityId;
+                        question.name = nameTextView.getText().toString();
 
-                        EditText dateEditText = findViewById(R.id.issue_close_date);
-                        EditText timeEditText = findViewById(R.id.issue_close_time);
+                        EditText dateEditText = findViewById(R.id.question_close_date);
+                        EditText timeEditText = findViewById(R.id.question_close_time);
                         String end = dateEditText.getText() + " " + timeEditText.getText().toString();
                         SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-                        issue.endTime = format.parse(end).getTime();
+                        question.endTime = format.parse(end).getTime();
 
-                        issue.type = type;
+                        question.type = type;
 
-                        LinearLayout choices = findViewById(R.id.issue_choices);
+                        LinearLayout choices = findViewById(R.id.question_choices);
                         for (int i = 0; i < choices.getChildCount(); i++) {
-                            Log.d("IssueAddActivity", "Agregando opción " + i);
+                            Log.d("QuestionAddActivity", "Agregando opción " + i);
                             View child = choices.getChildAt(i);
 
-                            IssueChoice choice = new IssueChoice();
+                            QuestionChoice choice = new QuestionChoice();
                             choice.id = UUID.randomUUID();
 
                             EditText choiceTextEditText = child.findViewById(R.id.choice_text);
@@ -171,18 +166,18 @@ public class IssueAddActivity extends MyActivity {
                             EditText choiceGuardianAddressEditText = child.findViewById(R.id.choice_guardian_address);
                             choice.guardianAddress = choiceGuardianAddressEditText.getText().toString();
 
-                            Log.d("IssueAddActivity", "choice.id: " + choice.id);
-                            Log.d("IssueAddActivity", "choice.text: " + choice.text);
+                            Log.d("QuestionAddActivity", "choice.id: " + choice.id);
+                            Log.d("QuestionAddActivity", "choice.text: " + choice.text);
 
-                            issue.choices.add(choice);
+                            question.choices.add(choice);
                         }
 
                         Signer signer = new Signer();
-                        signer.sign(issue);
+                        signer.sign(question);
 
-                        issueApiAdapter.add(issue, new RequestListener<Issue>() {
+                        questionApiAdapter.add(question, new RequestListener<Question>() {
                             @Override
-                            public void onComplete(Issue response) {
+                            public void onComplete(Question response) {
                                 working.cancel();
 
                                 Toast.makeText(context, "Asunto creado! :)", Toast.LENGTH_SHORT).show();
@@ -197,7 +192,7 @@ public class IssueAddActivity extends MyActivity {
                         });
                     } catch (Exception ex) {
                         working.cancel();
-                        Log.e("IssueAddActivity", ex.getMessage(), ex);
+                        Log.e("QuestionAddActivity", ex.getMessage(), ex);
                         Toast.makeText(context, "Error al agregar asunto: " + ex.getMessage(), Toast.LENGTH_LONG).show();
                     }
                 }

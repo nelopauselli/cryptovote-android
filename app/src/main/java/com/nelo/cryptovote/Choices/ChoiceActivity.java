@@ -9,19 +9,17 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.nelo.cryptovote.Base58;
-import com.nelo.cryptovote.Domain.Issue;
-import com.nelo.cryptovote.Domain.IssueChoice;
+import com.nelo.cryptovote.Domain.Question;
+import com.nelo.cryptovote.Domain.QuestionChoice;
 import com.nelo.cryptovote.Domain.Vote;
 import com.nelo.cryptovote.MyActivity;
 import com.nelo.cryptovote.R;
 import com.nelo.cryptovote.Signer;
-import com.nelo.cryptovote.WebApiAdapters.IssueApiAdapter;
-import com.nelo.cryptovote.WebApiAdapters.IssueGetListener;
+import com.nelo.cryptovote.WebApiAdapters.QuestionApiAdapter;
+import com.nelo.cryptovote.WebApiAdapters.QuestionGetListener;
 import com.nelo.cryptovote.WebApiAdapters.RequestListener;
 import com.nelo.cryptovote.WebApiAdapters.VoteApiAdapter;
 
-import java.io.UnsupportedEncodingException;
 import java.util.Date;
 import java.util.UUID;
 
@@ -30,7 +28,7 @@ public class ChoiceActivity extends MyActivity{
     private String tag;
 
     private Signer signer;
-    private IssueApiAdapter issueApiAdapter;
+    private QuestionApiAdapter questionApiAdapter;
     private VoteApiAdapter voteApiAdapter;
 
     public ChoiceActivity() {
@@ -46,7 +44,7 @@ public class ChoiceActivity extends MyActivity{
 
         initToolbar();
 
-        issueApiAdapter = new IssueApiAdapter(this, null);
+        questionApiAdapter = new QuestionApiAdapter(this, null);
         voteApiAdapter = new VoteApiAdapter(this, null);
     }
 
@@ -63,18 +61,18 @@ public class ChoiceActivity extends MyActivity{
         final Context context = this;
 
         Intent intent = this.getIntent();
-        final UUID issueId = UUID.fromString(intent.getStringExtra("issueId"));
+        final UUID questionId = UUID.fromString(intent.getStringExtra("questionId"));
         final UUID communityId = UUID.fromString(intent.getStringExtra("communityId"));
 
         final ChoiceAdapter adapter = new ChoiceAdapter(new ChoiceListener() {
             @Override
-            public void onVote(IssueChoice choice) {
+            public void onVote(QuestionChoice choice) {
                 final Toast working = Toast.makeText(context, "Emitiendo voto...", Toast.LENGTH_LONG);
                 working.show();
 
                 try {
                     Vote vote = new Vote();
-                    vote.issueId = issueId;
+                    vote.questionId = questionId;
                     vote.choiceId = choice.id;
                     vote.time = new Date().getTime();
 
@@ -104,16 +102,16 @@ public class ChoiceActivity extends MyActivity{
 
         recyclerView.setAdapter(adapter);
 
-        issueApiAdapter.get(communityId, issueId, new IssueGetListener() {
+        questionApiAdapter.get(communityId, questionId, new QuestionGetListener() {
             @Override
-            public void onComplete(Issue issue) {
-                Log.d(tag, "Binding issue: " + issue.name);
+            public void onComplete(Question question) {
+                Log.d(tag, "Binding question: " + question.name);
 
                 ActionBar actionBar = getSupportActionBar();
                 if(actionBar!=null)
-                    actionBar.setTitle(issue.name);
+                    actionBar.setTitle(question.name);
 
-                adapter.setEntities(issue.choices);
+                adapter.setEntities(question.choices);
                 adapter.notifyDataSetChanged();
             }
         });

@@ -8,7 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.nelo.cryptovote.Domain.IssueChoice;
+import com.nelo.cryptovote.Domain.QuestionChoice;
 import com.nelo.cryptovote.R;
 
 import java.nio.ByteBuffer;
@@ -16,9 +16,9 @@ import java.util.List;
 
 public class RecountAdapter extends RecyclerView.Adapter<RecountViewHolder> {
     private Context context;
-    private List<IssueChoice> choices;
+    private List<QuestionChoice> choices;
 
-    public void setEntities(List<IssueChoice> choices) {
+    public void setEntities(List<QuestionChoice> choices) {
         this.choices = choices;
     }
 
@@ -40,7 +40,7 @@ public class RecountAdapter extends RecyclerView.Adapter<RecountViewHolder> {
         if (choices == null)
             return;
 
-        final IssueChoice choice = choices.get(position);
+        final QuestionChoice choice = choices.get(position);
 
         Log.d(getClass().getSimpleName(), "Binding " + choice.text);
         Log.d(getClass().getSimpleName(), "Color " + choice.color);

@@ -7,11 +7,11 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
-import com.nelo.cryptovote.Domain.Issue;
+import com.nelo.cryptovote.Domain.Question;
 import com.nelo.cryptovote.MyActivity;
 import com.nelo.cryptovote.R;
-import com.nelo.cryptovote.WebApiAdapters.IssueApiAdapter;
-import com.nelo.cryptovote.WebApiAdapters.IssueGetListener;
+import com.nelo.cryptovote.WebApiAdapters.QuestionApiAdapter;
+import com.nelo.cryptovote.WebApiAdapters.QuestionGetListener;
 import com.nelo.cryptovote.WebApiAdapters.VoteApiAdapter;
 
 import java.util.UUID;
@@ -19,9 +19,9 @@ import java.util.UUID;
 public class VoteListActivity extends MyActivity {
     private VotesAdapter adapter = new VotesAdapter();
     private VoteApiAdapter voteApiAdapter;
-    private IssueApiAdapter issueApiAdapter;
+    private QuestionApiAdapter questionApiAdapter;
     private SwipeRefreshLayout swipeRefreshLayout;
-    private UUID issueId;
+    private UUID questionId;
     private UUID communityId;
 
     @Override
@@ -36,33 +36,33 @@ public class VoteListActivity extends MyActivity {
         this.swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                voteApiAdapter.list(issueId, adapter);
+                voteApiAdapter.list(questionId, adapter);
             }
         });
 
         voteApiAdapter = new VoteApiAdapter(this, this.swipeRefreshLayout);
-        issueApiAdapter = new IssueApiAdapter(this, this.swipeRefreshLayout);
+        questionApiAdapter = new QuestionApiAdapter(this, this.swipeRefreshLayout);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
 
-        RecyclerView rv = findViewById(R.id.issues);
+        RecyclerView rv = findViewById(R.id.questions);
 
         Intent intent = this.getIntent();
-        String issueName = intent.getStringExtra("issueName");
+        String questionName = intent.getStringExtra("questionName");
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle(issueName);
+        actionBar.setTitle(questionName);
 
-        this.issueId = UUID.fromString(intent.getStringExtra("issueId"));
+        this.questionId = UUID.fromString(intent.getStringExtra("questionId"));
         this.communityId = UUID.fromString(intent.getStringExtra("communityId"));
 
-        issueApiAdapter.get(communityId, issueId, new IssueGetListener() {
+        questionApiAdapter.get(communityId, questionId, new QuestionGetListener() {
             @Override
-            public void onComplete(Issue issue) {
-                adapter.setIssue(issue);
-                voteApiAdapter.list(issueId, adapter);
+            public void onComplete(Question question) {
+                adapter.setQuestion(question);
+                voteApiAdapter.list(questionId, adapter);
             }
         });
 

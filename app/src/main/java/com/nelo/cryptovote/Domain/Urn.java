@@ -14,7 +14,7 @@ import java.util.UUID;
 
 public class Urn implements Serializable {
     public UUID id;
-    public UUID issueId;
+    public UUID questionId;
     public String name;
     public List<byte[]> authorities = new ArrayList<>();
 
@@ -31,8 +31,8 @@ public class Urn implements Serializable {
         buffer.putLong(id.getMostSignificantBits());
         buffer.putLong(id.getLeastSignificantBits());
 
-        buffer.putLong(issueId.getMostSignificantBits());
-        buffer.putLong(issueId.getLeastSignificantBits());
+        buffer.putLong(questionId.getMostSignificantBits());
+        buffer.putLong(questionId.getLeastSignificantBits());
 
         byte[] nameAsBytes = name.getBytes("utf-8");
         buffer.put(nameAsBytes);

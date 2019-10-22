@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 import com.nelo.cryptovote.Domain.Community;
 import com.nelo.cryptovote.Members.MemberListActivity;
 import com.nelo.cryptovote.R;
-import com.nelo.cryptovote.Issues.IssueListActivity;
+import com.nelo.cryptovote.Questions.QuestionListActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -60,7 +60,7 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityViewHolder> 
         holder.parentLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(context, IssueListActivity.class);
+                Intent i = new Intent(context, QuestionListActivity.class);
 
                 Community community = items.get(position);
 

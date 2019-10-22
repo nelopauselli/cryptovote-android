@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background"
-    tools:context=".IssueResults.IssueResultActivity">
+    tools:context=".QuestionResults.QuestionResultActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -18,11 +18,11 @@
             android:layout_height="?attr/actionBarSize"
             android:elevation="4dp"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-            app:title="@string/issue_result"
+            app:title="@string/question_result"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Dark" />
 
         <android.support.v4.widget.SwipeRefreshLayout
-            android:id="@+id/issues_refresh"
+            android:id="@+id/questions_refresh"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 

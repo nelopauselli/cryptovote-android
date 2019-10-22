@@ -5,7 +5,7 @@ import java.io.UnsupportedEncodingException;
 import java.nio.ByteBuffer;
 import java.util.UUID;
 
-public class IssueChoice implements Serializable {
+public class QuestionChoice implements Serializable {
     public UUID id;
     public int color;
     public String text;

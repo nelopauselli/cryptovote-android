@@ -1,4 +1,4 @@
-package com.nelo.cryptovote.Issues;
+package com.nelo.cryptovote.Questions;
 
 import android.content.Context;
 import android.content.Intent;
@@ -12,39 +12,39 @@ import android.view.View;
 
 import com.nelo.cryptovote.MyActivity;
 import com.nelo.cryptovote.R;
-import com.nelo.cryptovote.WebApiAdapters.IssueApiAdapter;
+import com.nelo.cryptovote.WebApiAdapters.QuestionApiAdapter;
 
-public class IssueListActivity extends MyActivity {
+public class QuestionListActivity extends MyActivity {
     private RecyclerView.LayoutManager layoutManager;
     private SwipeRefreshLayout swipeRefreshLayout;
 
-    private IssueApiAdapter issueApiAdapter;
-    private IssueAdapter adapter;
+    private QuestionApiAdapter questionApiAdapter;
+    private QuestionAdapter adapter;
     private String communityId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_issue_list);
+        setContentView(R.layout.activity_question_list);
 
         initToolbar();
 
         final Context context = this;
 
-        this.swipeRefreshLayout = findViewById(R.id.issues_refresh);
+        this.swipeRefreshLayout = findViewById(R.id.questions_refresh);
         this.swipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary);
         this.swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                issueApiAdapter.list(communityId, adapter);
+                questionApiAdapter.list(communityId, adapter);
             }
         });
 
-        FloatingActionButton addButton = findViewById(R.id.issue_add);
+        FloatingActionButton addButton = findViewById(R.id.question_add);
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(context, IssueAddActivity.class);
+                Intent intent = new Intent(context, QuestionAddActivity.class);
                 intent.putExtra("communityId", communityId);
                 startActivity(intent);
             }
@@ -55,13 +55,13 @@ public class IssueListActivity extends MyActivity {
     protected void onResume() {
         super.onResume();
 
-        RecyclerView recyclerView = findViewById(R.id.issues);
+        RecyclerView recyclerView = findViewById(R.id.questions);
         recyclerView.setHasFixedSize(true);
 
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 
-        adapter = new IssueAdapter();
+        adapter = new QuestionAdapter();
         recyclerView.setAdapter(adapter);
 
         Intent intent = this.getIntent();
@@ -72,7 +72,7 @@ public class IssueListActivity extends MyActivity {
 
         this.communityId = intent.getStringExtra("communityId");
 
-        issueApiAdapter = new IssueApiAdapter(this, this.swipeRefreshLayout);
-        issueApiAdapter.list(communityId, adapter);
+        questionApiAdapter = new QuestionApiAdapter(this, this.swipeRefreshLayout);
+        questionApiAdapter.list(communityId, adapter);
     }
 }

@@ -1,7 +1,7 @@
 package com.nelo.cryptovote.Choices;
 
-import com.nelo.cryptovote.Domain.IssueChoice;
+import com.nelo.cryptovote.Domain.QuestionChoice;
 
 public interface ChoiceListener{
-    void onVote(IssueChoice choice);
+    void onVote(QuestionChoice choice);
 }

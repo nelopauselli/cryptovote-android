@@ -1,4 +1,4 @@
-package com.nelo.cryptovote.IssueResults;
+package com.nelo.cryptovote.QuestionResults;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,28 +11,28 @@ import com.nelo.cryptovote.R;
 
 import java.util.UUID;
 
-public class IssueResultActivity extends MyActivity {
+public class QuestionResultActivity extends MyActivity {
     private RecyclerView.LayoutManager layoutManager;
     private SwipeRefreshLayout swipeRefreshLayout;
 
-    private IssueResultApiAdapter resultApiAdapter;
-    private IssueResultAdapter adapter;
+    private QuestionResultApiAdapter resultApiAdapter;
+    private QuestionResultAdapter adapter;
     private UUID communityId;
-    private UUID issueId;
+    private UUID questionId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_issue_result);
+        setContentView(R.layout.activity_question_result);
 
         initToolbar();
 
-        this.swipeRefreshLayout = findViewById(R.id.issues_refresh);
+        this.swipeRefreshLayout = findViewById(R.id.questions_refresh);
         this.swipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary);
         this.swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                resultApiAdapter.get(communityId, issueId, adapter);
+                resultApiAdapter.get(communityId, questionId, adapter);
             }
         });
     }
@@ -47,14 +47,14 @@ public class IssueResultActivity extends MyActivity {
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 
-        adapter = new IssueResultAdapter();
+        adapter = new QuestionResultAdapter();
         recyclerView.setAdapter(adapter);
 
         Intent intent = this.getIntent();
-        issueId = UUID.fromString(intent.getStringExtra("issueId"));
+        questionId = UUID.fromString(intent.getStringExtra("questionId"));
         communityId = UUID.fromString(intent.getStringExtra("communityId"));
 
-        resultApiAdapter = new IssueResultApiAdapter(this, this.swipeRefreshLayout);
-        resultApiAdapter.get(communityId, issueId, adapter);
+        resultApiAdapter = new QuestionResultApiAdapter(this, this.swipeRefreshLayout);
+        resultApiAdapter.get(communityId, questionId, adapter);
     }
 }

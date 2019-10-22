@@ -6,13 +6,12 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.view.View;
-import android.widget.GridLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.nelo.cryptovote.Domain.ChoiceRecount;
-import com.nelo.cryptovote.Domain.Issue;
-import com.nelo.cryptovote.Domain.IssueChoice;
+import com.nelo.cryptovote.Domain.Question;
+import com.nelo.cryptovote.Domain.QuestionChoice;
 import com.nelo.cryptovote.Domain.Recount;
 import com.nelo.cryptovote.MyActivity;
 import com.nelo.cryptovote.R;
@@ -44,11 +43,11 @@ public class RecountDetailActivity extends MyActivity {
     protected void onResume() {
         super.onResume();
 
-        Issue issue = (Issue) getIntent().getSerializableExtra("issue");
-        if (issue != null) {
+        Question question = (Question) getIntent().getSerializableExtra("question");
+        if (question != null) {
             CharSequence urnName = getIntent().getStringExtra("urnName");
             ActionBar actionBar = getSupportActionBar();
-            actionBar.setTitle(issue.name + " - " + urnName);
+            actionBar.setTitle(question.name + " - " + urnName);
         }
 
         Recount recount = (Recount) getIntent().getSerializableExtra("recount");
@@ -62,7 +61,7 @@ public class RecountDetailActivity extends MyActivity {
             });
 
             for (ChoiceRecount result : results) {
-                for (IssueChoice choice : issue.choices) {
+                for (QuestionChoice choice : question.choices) {
                     if (choice.id.equals(result.choiceId)) {
                         View child = getLayoutInflater().inflate(R.layout.choice_result_item, null);
 
