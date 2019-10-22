@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.nelo.cryptovote">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/logo"
+        android:label="@string/app_name"
+        android:roundIcon="@drawable/logo"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name=".Account.AccountActivity"></activity>
+        <activity
+            android:name=".Landing.SplashActivity"
+            android:theme="@style/SplashTheme" />
+        <activity android:name=".Communities.CommunityListActivity" />
+        <activity android:name=".Issues.IssueListActivity" />
+        <activity android:name=".Issues.IssueAddActivity" />
+        <activity android:name=".IssueResults.IssueResultActivity" />
+        <activity android:name=".Members.MemberListActivity" />
+        <activity android:name=".Members.MemberAddActivity" />
+        <activity android:name=".Votes.VoteListActivity" />
+        <activity android:name=".Votes.VoteDetailActivity" />
+        <activity android:name=".Choices.ChoiceActivity" />
+        <activity android:name=".Urns.UrnListActivity" />
+        <activity android:name=".Recounts.RecountAddActivity" />
+        <activity android:name=".Recounts.RecountDetailActivity" />
+        <activity
+            android:name=".Communities.CommunityDetailActivity"
+            android:label="@string/community"
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="www.cryptovote.com"
+                    android:path="/community/details"
+                    android:scheme="http" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".Communities.CommunityAddActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="www.cryptovote.com"
+                    android:path="/community/add"
+                    android:scheme="http" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".Account.UnlockActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>

@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background"
+    android:orientation="vertical"
+    tools:context=".Members.MemberAddActivity">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/menu"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:elevation="4dp"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Dark"
+        app:title="@string/issue" />
+
+    <EditText
+        android:id="@+id/issue_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_medium"
+        android:background="@drawable/text_box"
+        android:hint="@string/issueName"
+        android:padding="@dimen/margin_medium" />
+
+   <android.support.v7.widget.AppCompatSpinner
+       android:id="@+id/issue_type"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:layout_margin="@dimen/margin_medium"
+       android:background="@drawable/text_box"
+       android:hint="@string/issueName"
+       android:padding="@dimen/margin_medium" >
+   </android.support.v7.widget.AppCompatSpinner>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/margin_medium"
+        android:textColor="@color/colorPrimaryDarkText"
+        android:textSize="@dimen/text_large"
+        android:text="@string/issue_choices"/>
+    <LinearLayout
+        android:id="@+id/issue_choices"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="@dimen/margin_medium">
+        <!-- Acá se crean las opciones -->
+    </LinearLayout>
+
+    <android.support.v7.widget.AppCompatButton
+        android:id="@+id/issue_choices_add"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:backgroundTint="@color/colorPrimary"
+        android:textColor="@color/colorPrimaryText"
+        android:text="@string/choice_add"/>
+
+    <LinearLayout
+        android:id="@+id/issue_end"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+    <EditText
+        android:id="@+id/issue_close_date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_medium"
+        android:layout_weight="1"
+        android:background="@drawable/text_box"
+        android:hint="@string/issue_close_date"
+        android:padding="@dimen/margin_medium" />
+
+    <EditText
+        android:id="@+id/issue_close_time"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_medium"
+        android:layout_weight="1"
+        android:background="@drawable/text_box"
+        android:hint="@string/issue_close_time"
+        android:padding="@dimen/margin_medium" />
+    </LinearLayout>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/issue_add"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/fab_margin"
+        app:backgroundTint="@color/colorAccent"
+        android:tint="@color/colorAccentText"
+        app:srcCompat="@android:drawable/ic_menu_send" />
+</LinearLayout>

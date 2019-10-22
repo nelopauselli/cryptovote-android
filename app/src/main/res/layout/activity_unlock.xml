@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background"
+    android:orientation="vertical"
+    android:gravity="center"
+    tools:context=".Account.UnlockActivity">
+
+    <EditText
+        android:id="@+id/server"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_large"
+        android:padding="@dimen/margin_medium"
+        android:background="@drawable/card_bg"
+        android:gravity="center"
+        android:hint="@string/server_ip"
+        android:textSize="@dimen/text_extra_large"
+        android:inputType="textUri" />
+
+    <EditText
+        android:id="@+id/username"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_large"
+        android:padding="@dimen/margin_medium"
+        android:background="@drawable/card_bg"
+        android:gravity="center"
+        android:hint="@string/username"
+        android:textSize="@dimen/text_extra_large"
+        android:inputType="textAutoComplete" />
+
+    <EditText
+        android:id="@+id/password"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_large"
+        android:padding="@dimen/margin_medium"
+        android:background="@drawable/card_bg"
+        android:focusedByDefault="true"
+        android:gravity="center"
+        android:textSize="@dimen/text_medium"
+        android:hint="@string/password"
+        android:inputType="numberPassword" />
+
+    <android.support.v7.widget.AppCompatButton
+        android:id="@+id/unlock"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_medium"
+        android:padding="@dimen/margin_medium"
+        android:background="@drawable/roundedbutton"
+        android:textSize="@dimen/text_medium"
+        android:elevation="8dp"
+        android:text="@string/unlock"
+        android:textColor="@color/colorButtonText" />
+
+    <LinearLayout
+        android:id="@+id/identities"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="bottom|center"
+        android:orientation="horizontal">
+
+    </LinearLayout>
+</LinearLayout>
